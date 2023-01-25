@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_power_of_2.c                                    :+:      :+:    :+:   */
+/*   lcm.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 14:11:03 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/19 08:34:48 by jonascim         ###   ########.fr       */
+/*   Created: 2023/01/25 09:57:06 by jonascim          #+#    #+#             */
+/*   Updated: 2023/01/25 10:07:26 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <stdlib.h>
 
-int	is_power_of_2(unsigned int n)
+int	lcm(unsigned int a, unsigned int b)
 {
-	if (n % 2 == 0)
-		return (is_power_of_2(n / 2));
-	else if (n % 2 != 0)
-		return (0);
+	int	lcm = 0;
+
+	if (a == NULL || b == NULL)
+		lcm = 0;
+	else
+	{
+		if (a > b)
+			lcm = a;
+		else
+			lcm = b;
+		while (lcm % a != 0 && lcm % b != 0)
+				lcm += lcm;
+	}
+	return (lcm);
 }

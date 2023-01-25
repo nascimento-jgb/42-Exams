@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_power_of_2.c                                    :+:      :+:    :+:   */
+/*   snake_to_camel.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 14:11:03 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/19 08:34:48 by jonascim         ###   ########.fr       */
+/*   Created: 2023/01/19 08:19:11 by jonascim          #+#    #+#             */
+/*   Updated: 2023/01/19 08:29:50 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <unistd.h>
 
-int	is_power_of_2(unsigned int n)
+int	main(int argc, char **argv)
 {
-	if (n % 2 == 0)
-		return (is_power_of_2(n / 2));
-	else if (n % 2 != 0)
-		return (0);
+	int i = 0;
+	int len = 0;
+
+	if (argc == 2)
+	{
+		while (argv[1][i])
+		{
+			if (argv[1][i] == '_')
+			{
+				i++;
+				argv[1][i] -= 32;
+			}
+			write(1, &argv[1][i], 1);
+			i++;
+		}
+	}
+	write(1, "\n", 1);
+	return (0);
 }

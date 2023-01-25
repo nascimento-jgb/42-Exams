@@ -1,21 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_power_of_2.c                                    :+:      :+:    :+:   */
+/*   parasum.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 14:11:03 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/19 08:34:48 by jonascim         ###   ########.fr       */
+/*   Created: 2023/01/25 10:11:04 by jonascim          #+#    #+#             */
+/*   Updated: 2023/01/25 10:21:48 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <unistd.h>
 
-int	is_power_of_2(unsigned int n)
+void	ft_putnbr(int nbr)
 {
-	if (n % 2 == 0)
-		return (is_power_of_2(n / 2));
-	else if (n % 2 != 0)
-		return (0);
+	int	res = 0;
+	if (nbr >= 10)
+		ft_putnbr(nbr / 10);
+	res = (nbr % 10) + '0';
+	write(1, &res, 1);
+}
+
+int	main(int argc, char **argv)
+{
+	(void)argv;
+
+	ft_putnbr(argc - 1);
+	write(1, "\n", 1);
+	return (0);
 }

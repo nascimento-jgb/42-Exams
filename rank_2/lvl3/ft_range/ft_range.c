@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_power_of_2.c                                    :+:      :+:    :+:   */
+/*   ft_range.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 14:11:03 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/19 08:34:48 by jonascim         ###   ########.fr       */
+/*   Created: 2023/01/25 07:35:57 by jonascim          #+#    #+#             */
+/*   Updated: 2023/01/25 07:44:30 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdlib.h>
 
-int	is_power_of_2(unsigned int n)
+int	*ft_range(int start, int end)
 {
-	if (n % 2 == 0)
-		return (is_power_of_2(n / 2));
-	else if (n % 2 != 0)
-		return (0);
+	int	*pad;
+	int	i = 0;
+	int	range = (end - start) + 1;
+
+	pad = malloc(sizeof(int *) * range);
+	if (!pad)
+		return (NULL);
+	while (i < range)
+		pad[i] = start + i++;
+	return (pad);
 }

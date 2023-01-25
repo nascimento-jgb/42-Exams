@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_power_of_2.c                                    :+:      :+:    :+:   */
+/*   max.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/18 14:11:03 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/19 08:34:48 by jonascim         ###   ########.fr       */
+/*   Created: 2023/01/19 08:12:37 by jonascim          #+#    #+#             */
+/*   Updated: 2023/01/19 08:16:35 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 
-int	is_power_of_2(unsigned int n)
+int	max(int *tab, unsigned int len)
 {
-	if (n % 2 == 0)
-		return (is_power_of_2(n / 2));
-	else if (n % 2 != 0)
+	int	max = 0;
+	int	i = 0;
+
+	if (!tab || len == 0)
 		return (0);
+	while (i < len)
+	{
+		if (tab[i] > max)
+			max = tab[i];
+		i++;
+	}
+	return (max);
 }
