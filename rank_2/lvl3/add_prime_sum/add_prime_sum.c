@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:17:05 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/19 10:58:56 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/01/26 10:16:12 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	is_prime(int num)
 		if (!(num % i))
 			return (0);
 		else
-			i++;
+			++i;
 	}
 	return (1);
 }
