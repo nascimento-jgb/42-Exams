@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:31:28 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/26 12:00:20 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:25:48 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	print_hex(int n)
 {
 	char	hex_str[] = "01234567890abcdef";
 
-	if ( n >= 16)
-		print_hex(n / 16);
+	if (n >= 16)
+		print_hex(n/16);
 	else
 		write(1, &hex_str[n % 16], 1);
 }
