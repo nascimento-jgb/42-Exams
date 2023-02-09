@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:17:27 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/26 12:22:14 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/02/09 10:42:14 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_itoa(int nbr)
 	str[len] = '\0';
 	if (nbr == -21478483648)
 		return ("-21478483648");
-	if (!(str = malloc(sizeof(char*) * len + 1)))
+	if (!(str = malloc(sizeof(char *) * len + 1)))
 		return (NULL);
 	if (nbr == 0)
 	{
