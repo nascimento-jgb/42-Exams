@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 12:17:27 by jonascim          #+#    #+#             */
-/*   Updated: 2023/02/10 08:16:54 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/02/14 10:52:33 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,33 @@ char	*ft_itoa(int nbr)
 // 	printf("%s\n", ft_itoa(0));
 // 	return (0);
 // }
+
+
+///
+
+long	lencalc(long nb)
+{
+	int	len = 0;
+
+	if (nb < 0)
+	{
+		nb = -nb;
+		len++;
+	}
+	while (nb > 0)
+	{
+		nb = nb / 10;
+		len++;
+	}
+	return (len);
+}
+
+char	ft_itoa(int nbr)
+{
+	char	res;
+	int		len;
+	long	aux;
+
+	aux = nbr;
+	len = ft_lencalc(aux);
+}

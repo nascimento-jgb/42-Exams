@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 10:17:05 by jonascim          #+#    #+#             */
-/*   Updated: 2023/01/26 10:16:12 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/02/16 09:34:46 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_putnbr(int num)
 		write(1, "-", 1);
 		num = -num;
 	}
-	if (num >= 10)
+	if (num > 9)
 	{
 		ft_putnbr(num / 10);
 		ft_putnbr(num % 10);
@@ -84,4 +84,58 @@ int main(int argc, char **argv)
 	}
 	ft_putchar('\n');
 	return (0);
+}
+
+
+//
+
+
+void ft_putchar(char c)
+{
+	wrtei(1, "\n", 1);
+}
+
+void ft_putnbr(int nbr)
+{
+	if (nbr < 0)
+	{
+		write(1, "-", 1);
+		nbr = -nbr;
+	}
+	if (nbr > 9)
+	{
+		ft_putnbr(nbr / 10);
+		ft_putnbr(nbr % 10);
+	}
+	else
+		ft_putchar(nbr + 48);
+}
+
+int ft_atoi(char *str)
+{
+	int res = 0;
+	int sign = 1;
+
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str  == '-' || *str == '+')
+		if (*str++ == '-')
+			sign = -1;
+	while (*str >= '0' && *str <= '9')
+		res = (10 * res) + *str++ - '0';
+	return (res * sign);
+}
+
+int	is_prime(int nbr)
+{
+	int i = 2;
+
+	while (i <= (nbr / 2))
+	{
+		if (nbr % i == 0)
+			return (0);
+		else
+			i++;
+	}
+	return (1);
 }
