@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 08:10:30 by jonascim          #+#    #+#             */
-/*   Updated: 2023/03/03 11:51:42 by jonascim         ###   ########.fr       */
+/*   Created: 2023/03/07 07:29:48 by jonascim          #+#    #+#             */
+/*   Updated: 2023/03/07 10:08:04 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,82 +14,140 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-static char	ft_strlen(char *str)
+int	ft_strchr(char *str)
 {
-	int	i;
+	int	i = 0;
 
-	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i = 0;
+
+	if (!str)
+		return (0);
 	while (str[i])
 		i++;
 	return (i);
 }
 
-static char	*ft_strdup(char *str)
+char	*ft_strjoin(char *dest, char *orig)
 {
-	char	*dest;
-	int		i;
+	char			*aux;
+	unsigned int	len;
+	int				i = 0;
+	int				j = 0;
 
-	i = 0;
-	dest = (char *)malloc(sizeof(char) * ft_strlen(str) + 1);
-	if (!dest)
-	{
-		free(dest);
+	if (!orig && !dest)
 		return (NULL);
-	}
-	while (str[i])
+	len = ft_strlen(dest) + ft_strlen(orig);
+	aux = (char *)malloc(sizeof(char) * (len + 1));
+	if (!aux)
+		return (NULL);
+	if (dest)
 	{
-		dest[i] = str[i];
+		while (dest[i])
+		{
+			aux[i] = dest[i];
+			i++;
+		}
+	}
+	while (orig[j])
+	{
+		aux[i] = orig[j];
+		j++;
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	aux[len] = '\0';
+	free((void *)dest);
+	return (aux);
 }
 
-static char	*ft_strjoin(char *str, char c)
+char	*push_line(char *remains)
 {
-	char	*dest;
-	int		i;
+	char	*aux;
+	int		i = 0;
 
-	i = 0;
-	while (str[i])
+	while (remains[i] && remains[i] != '\n')
 		i++;
-	dest = (char *)malloc(sizeof(char) * (i + 2));
-	if (!dest)
-		return (free(dest), NULL);
+	if (remains[i] == '\n')
+		i++;
+	aux = (char *)malloc(sizeof(char) * (i + 1));
+	if (!aux)
+		return (NULL);
 	i = 0;
-	while (str[i])
+	while (remains[i] && remains[i] != '\n')
 	{
-		dest[i] = str[i];
+		aux[i] = remains[i];
 		i++;
 	}
-	dest[i] = c;
-	dest[i + 1] = '\0';
-	free(str);
-	return (dest);
+	if (remains[i] == '\n')
+	{
+		aux[i] = '\n';
+		aux[i + 1] = '\0';
+	}
+	else
+		aux[i] = '\0';
+	return (aux);
+}
+
+char	*cut_next_line(char *remains)
+{
+	char	*aux;
+	int		i = 0;
+	int		j = 0;
+
+	while (remains[i] && remains[i] != '\n')
+		i++;
+	if (!remains[i])
+	{
+		free(remains);
+		return (NULL);
+	}
+	aux = (char *)malloc(sizeof(char) * (ft_strlen(remains) - i + 1));
+	if (!aux)
+		return (NULL);
+	i++;
+	while (remains[i])
+	{
+		aux[j] = remains[i];
+		j++;
+		i++;
+	}
+	aux[j] = '\0';
+	free(remains);
+	return (aux);
 }
 
 char	*get_next_line(int fd)
 {
-	char		buffer;
-	static char	*line;
-	int			bytes;
-	int			i;
-
-	i = 0;
-	bytes = 1;
-	if (fd < 0)
+	if (fd < 0 || read(fd, NULL, 0) < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line = ft_strdup("");
-	while (bytes > 0)
+
+	static char	*remains;
+	char		*line;
+	char		buffer[BUFFER_SIZE + 1];
+	int			count;
+
+	count = 1;
+	buffer[0] = '\0';
+	while (!ft_strchr(buffer) && count != 0)
 	{
-		bytes = read(fd, &buffer, BUFFER_SIZE - BUFFER_SIZE + 1);
-		line = ft_strjoin(line, buffer);
-		if (buffer == '\n')
-			break ;
+		if ((count = read(fd, buffer, BUFFER_SIZE)) == -1)
+			return (NULL);
+		buffer[count] = '\0';
+		remains = ft_strjoin(remains, buffer);
 	}
-	while (line[i])
-		i++;
-	if (i == 0 || bytes == -1)
+	line = push_line(remains);
+	remains = cut_next_line(remains);
+	if (line[0] == '\0')
 	{
 		free(line);
 		return (NULL);
@@ -97,12 +155,13 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
+
 int	main(int argc, char **argv)
 {
 	int		fd;
 	char	*rline;
 
-	if (argc != 2 || BUFFER_SIZE < 1)
+	if (argc != 2 || BUFFER_SIZE <= 1)
 		return (1);
 	fd = open(argv[1], O_RDONLY);
 	rline = NULL;

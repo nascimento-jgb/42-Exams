@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 08:08:28 by jonascim          #+#    #+#             */
-/*   Updated: 2023/02/26 15:40:08 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/03/07 10:13:56 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-char	*get_next_Line(int fd);
+char	*get_next_line(int fd);
 
 #endif
