@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/07 07:29:48 by jonascim          #+#    #+#             */
-/*   Updated: 2023/03/07 10:08:04 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/03/11 09:05:54 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,20 @@
 
 int	ft_strchr(char *str)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	while (str[i])
-	{
-		if (str[i] == '\n')
+		if (str[i++] == '\n')
 			return (1);
-		i++;
-	}
 	return (0);
 }
 
 int	ft_strlen(char *str)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (!str)
 		return (0);
 	while (str[i])
@@ -42,15 +41,16 @@ char	*ft_strjoin(char *dest, char *orig)
 {
 	char			*aux;
 	unsigned int	len;
-	int				i = 0;
-	int				j = 0;
+	int				i;
+	int				j;
 
-	if (!orig && !dest)
+	if (!dest && !orig)
 		return (NULL);
 	len = ft_strlen(dest) + ft_strlen(orig);
 	aux = (char *)malloc(sizeof(char) * (len + 1));
 	if (!aux)
 		return (NULL);
+	i = 0;
 	if (dest)
 	{
 		while (dest[i])
@@ -59,36 +59,39 @@ char	*ft_strjoin(char *dest, char *orig)
 			i++;
 		}
 	}
+	j = 0;
 	while (orig[j])
 	{
 		aux[i] = orig[j];
-		j++;
 		i++;
+		j++;
 	}
 	aux[len] = '\0';
 	free((void *)dest);
+	free((void *)orig);
 	return (aux);
 }
 
-char	*push_line(char *remains)
+char	*push_line(char *str)
 {
 	char	*aux;
-	int		i = 0;
+	int		i;
 
-	while (remains[i] && remains[i] != '\n')
+	i = 0;
+	while (str[i] && str[i] != '\n')
 		i++;
-	if (remains[i] == '\n')
+	if (str[i] == '\n')
 		i++;
 	aux = (char *)malloc(sizeof(char) * (i + 1));
 	if (!aux)
 		return (NULL);
 	i = 0;
-	while (remains[i] && remains[i] != '\n')
+	while (str[i] && str[i] != '\n')
 	{
-		aux[i] = remains[i];
+		aux[i] = str[i];
 		i++;
 	}
-	if (remains[i] == '\n')
+	if (str[i] == '\n')
 	{
 		aux[i] = '\n';
 		aux[i + 1] = '\0';
@@ -98,55 +101,57 @@ char	*push_line(char *remains)
 	return (aux);
 }
 
-char	*cut_next_line(char *remains)
+char	*update_stash(char *str)
 {
 	char	*aux;
-	int		i = 0;
-	int		j = 0;
+	int		i;
+	int		j;
 
-	while (remains[i] && remains[i] != '\n')
-		i++;
-	if (!remains[i])
-	{
-		free(remains);
+	i = 0;
+	j = 0;
+	if (!str)
 		return (NULL);
-	}
-	aux = (char *)malloc(sizeof(char) * (ft_strlen(remains) - i + 1));
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (str[i] == '\n')
+		i++;
+	aux = (char *)malloc(sizeof(char) * (ft_strlen(str) - i + 1));
 	if (!aux)
 		return (NULL);
-	i++;
-	while (remains[i])
+	while (str[i])
 	{
-		aux[j] = remains[i];
+		aux[j] = str[i];
 		j++;
 		i++;
 	}
 	aux[j] = '\0';
-	free(remains);
+	free(str);
 	return (aux);
 }
 
 char	*get_next_line(int fd)
 {
+	char		*buffer;
+	char		*line;
+	static char	*stash;
+	int			counter;
+
 	if (fd < 0 || read(fd, NULL, 0) < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-
-	static char	*remains;
-	char		*line;
-	char		buffer[BUFFER_SIZE + 1];
-	int			count;
-
-	count = 1;
+	counter = 1;
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
 	buffer[0] = '\0';
-	while (!ft_strchr(buffer) && count != 0)
+	while (!ft_strchr(buffer) && counter != 0)
 	{
-		if ((count = read(fd, buffer, BUFFER_SIZE)) == -1)
+		if ((counter = read(fd, buffer, BUFFER_SIZE)) == -1)
 			return (NULL);
-		buffer[count] = '\0';
-		remains = ft_strjoin(remains, buffer);
+		buffer[counter] = '\0';
+		stash = ft_strjoin(stash, buffer);
 	}
-	line = push_line(remains);
-	remains = cut_next_line(remains);
+	line = push_line(stash);
+	stash = update_stash(stash);
 	if (line[0] == '\0')
 	{
 		free(line);
@@ -158,20 +163,18 @@ char	*get_next_line(int fd)
 
 int	main(int argc, char **argv)
 {
+	char	*line;
 	int		fd;
-	char	*rline;
 
-	if (argc != 2 || BUFFER_SIZE <= 1)
-		return (1);
 	fd = open(argv[1], O_RDONLY);
-	rline = NULL;
-	while ((rline = get_next_line(fd)) != NULL)
+	line  = NULL;
+	while ((line = get_next_line(fd)) > 0)
 	{
-		printf("%s", rline);
-		free(rline);
-		rline = NULL;
+		printf("%s", line);
+		free(line);
+		line = NULL;
 	}
-	free(rline);
-	rline = NULL;
+	free(line);
+	line = NULL;
 	return (0);
 }
