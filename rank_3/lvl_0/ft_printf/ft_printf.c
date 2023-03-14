@@ -6,15 +6,15 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:50:59 by jonascim          #+#    #+#             */
-/*   Updated: 2023/02/23 12:34:23 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/03/07 12:44:55 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
 
-#include <stdio.h>
-#include <limits.h>
+// #include <stdio.h>
+// #include <limits.h>
 
 void	put_str(char *str, int *len)
 {

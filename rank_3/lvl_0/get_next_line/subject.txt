@@ -3,7 +3,7 @@ Expected files : get_next_line.c get_next_line.h
 Allowed functions: read, free, malloc
 --------------------------------------------------------------------------------
 
-Write a function named get_next_line which prototype should be:
+Write a function \n\n\n\n\nnamed get_next_line which prototype should be:
 char *get_next_line(int fd);
 
 
