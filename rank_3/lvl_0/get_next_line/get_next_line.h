@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 08:08:28 by jonascim          #+#    #+#             */
-/*   Updated: 2023/03/14 09:03:54 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/03/14 15:43:53 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,8 @@
 # endif
 
 char	*get_next_line(int fd);
+char	*ft_strjoin(char *dest, char *orig);
+int		ft_strlen(char *str);
+int		ft_strchr(char *str);
 
 #endif
