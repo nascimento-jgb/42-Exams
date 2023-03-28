@@ -5,24 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 08:08:28 by jonascim          #+#    #+#             */
-/*   Updated: 2023/03/14 15:43:53 by jonascim         ###   ########.fr       */
+/*   Created: 2023/03/28 08:07:33 by jonascim          #+#    #+#             */
+/*   Updated: 2023/03/28 08:09:04 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# include <unistd.h>
 # include <stdlib.h>
+# include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 30
 # endif
 
 char	*get_next_line(int fd);
-char	*ft_strjoin(char *dest, char *orig);
-int		ft_strlen(char *str);
-int		ft_strchr(char *str);
 
 #endif
