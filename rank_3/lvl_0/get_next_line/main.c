@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 10:30:41 by jonascim          #+#    #+#             */
-/*   Updated: 2023/03/28 12:08:42 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/04/02 14:28:50 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,39 @@ int	main(int argc, char **argv)
 	{
 		i = 0;
 		fd = open(argv[1], O_RDONLY);
-		// line = get_next_line(fd);
-		// printf("%s", line);
-		// free(line);
-		// line = NULL;
-		// line = get_next_line(fd);
-		// printf("%s", line);
-		// free(line);
-		// line = NULL;
-		while ((line = get_next_line(fd)) != 0)
+		while ((line = get_next_line(fd)) != NULL)
 		{
 			i++;
 			printf("%s", line);
 			free(line);
 			line = NULL;
 		}
-		printf("\n");
-		printf("%d", i);
+		// line = get_next_line(fd);
+		// printf("%s", line);
+		// free(line);
+		// line = NULL;
+		// line = get_next_line(fd);
+		// printf("%s", line);
+		// free(line);
+		// line = NULL;
+		// line = get_next_line(fd);
+		// printf("%s", line);
+		// free(line);
+		// line = NULL;
+		// line = get_next_line(fd);
+		// printf("%s", line);
+		// free(line);
+		// line = NULL;
+		// line = get_next_line(fd);
+		// printf("%s", line);
 		free(line);
 		line = NULL;
+		// line = get_next_line(fd);
+		// printf("%s", line);
+		// free(line);
+		// line = NULL;
+		printf("\n");
+		printf("%d", i);
 	}
 	return (0);
 }
