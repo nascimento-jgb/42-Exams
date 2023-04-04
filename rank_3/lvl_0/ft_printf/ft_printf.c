@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:50:59 by jonascim          #+#    #+#             */
-/*   Updated: 2023/03/28 11:39:26 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/04/04 10:42:50 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	ft_printf(const char *format, ...)
 	va_start(ptr, format);
 	while (*format)
 	{
-		if (*format == '%')
+		if (*format == '%' && *format + 1)
 		{
 			format++;
 			if (*format == 's')
@@ -56,8 +56,8 @@ int	ft_printf(const char *format, ...)
 				put_nbr((long long int)va_arg(ptr, int), 10, &len);
 			else if (*format == 'x')
 				put_nbr((long long int)va_arg(ptr, unsigned int), 16, &len);
-			else if (*format == '%')
-				len += write(1, format, 1);
+			// else if (*format == '%')
+			// 	len += write(1, format, 1);
 		}
 		else
 			len += write(1, format, 1);

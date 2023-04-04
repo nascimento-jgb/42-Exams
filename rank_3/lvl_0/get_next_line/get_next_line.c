@@ -6,7 +6,7 @@
 /*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/02 09:57:04 by jonascim          #+#    #+#             */
-/*   Updated: 2023/04/02 14:29:41 by jonascim         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:48:16 by jonascim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*get_line(char *buffer)
 		return (NULL);
 	while (buffer[i] != '\n' && buffer[i] != '\0')
 		i++;
-	new_line = ft_calloc(i + 2, sizeof(char));
+	new_line = ft_calloc(i + 1, sizeof(char));
 	if (!new_line)
 		return (NULL);
 	i = 0;
@@ -61,10 +61,10 @@ char	*update_buffer(char *buffer)
 		free(buffer);
 		return (NULL);
 	}
+	i++;
 	aux = (char *)malloc(sizeof(char) * ft_strlen(buffer) - i + 1);
 	if (!aux)
 		return (NULL);
-	i++;
 	new_buffer = aux;
 	while (buffer[i])
 		*aux++ = buffer[i++];
@@ -73,7 +73,7 @@ char	*update_buffer(char *buffer)
 	return (new_buffer);
 }
 
-char	*read_buffer(int fd, char *buffer, int *flag)
+char	*read_buffer(int fd, char *buffer) //, int *flag
 {
 	char	*buf;
 	int		ret;
@@ -85,20 +85,20 @@ char	*read_buffer(int fd, char *buffer, int *flag)
 	buf = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	while ((ret = read(fd, buf, BUFFER_SIZE)) != 0)
+	while ((ret = read(fd, buf, BUFFER_SIZE)))
 	{
 		if (ret == -1)
 			return (NULL);
 		buf[ret] = '\0';
 		buffer = new_buffer(buffer, buf);
-		if (ret < BUFFER_SIZE)
-			*flag = 1;
+		// if (ret < BUFFER_SIZE)
+		// 	*flag = 1;
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
 	free(buf);
-	if (ret == 0)
-		return (NULL);
+	// if (ret == 0)
+	// 	return (NULL);
 	return (buffer);
 }
 
@@ -106,16 +106,16 @@ char	*get_next_line(int fd)
 {
 	static char	*buffer;
 	char		*line;
-	int			flag;
+	// int			flag;
 
-	flag = 0;
+	// flag = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
-	buffer = read_buffer(fd, buffer, &flag);
+	buffer = read_buffer(fd, buffer); //, &flag
 	if (!buffer)
 		return (NULL);
-	if (flag == 1)
-		return (buffer);
+	// if (flag == 1)
+	// 	return (buffer);
 	line = get_line(buffer);
 	buffer = update_buffer(buffer);
 	return (line);
