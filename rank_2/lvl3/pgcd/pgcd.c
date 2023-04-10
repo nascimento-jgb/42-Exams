@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 			i = n1;
 		while (i >= 1)
 		{
-			if ( n1 % i == 0 & n2 % i == 0)
+			if (n1 % i == 0 & n2 % i == 0)
 				break ;
 			else
 				--i;
