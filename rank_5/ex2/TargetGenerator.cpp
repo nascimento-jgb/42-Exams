@@ -1,51 +1,37 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   TargetGenerator.cpp                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jonascim <jonascim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/03 12:10:23 by jonascim          #+#    #+#             */
-/*   Updated: 2023/06/03 12:19:34 by jonascim         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "TargetGenerator.hpp"
 
-TargetGenerator::TargetGenerator(void)
-{
-	return ;
-}
+TargetGenerator::TargetGenerator(void) {return ;}
 
 TargetGenerator::~TargetGenerator(void)
 {
-	std::map<std::string, ATarget *>::iterator ini = this->arr_target.begin();
-	while (ini != this->arr_target.end())
+	std::map<std::string, ATarget *>::iterator it_begin = this->aim.begin();
+	std::map<std::string, ATarget *>::iterator it_end = this->aim.end();
+	while (it_begin != it_end)
 	{
-		delete ini->second;
-		++ini;
+		delete it_begin->second;
+		++it_begin;
 	}
-	this->arr_target.clear();
+	this->aim.clear();
+	return ;
 }
 
 void	TargetGenerator::learnTargetType(ATarget *target_ptr)
 {
 	if (target_ptr)
-		arr_target.insert(std::pair<std::string, ATarget *>(target_ptr->getType(), target_ptr->clone()));
+		aim.insert(std::pair<std::string, ATarget *>(target_ptr->getType(), target_ptr->clone()));
+	return ;
 }
 
-void	TargetGenerator::forgetTargetType(std::string const &type_name)
+void	TargetGenerator::forgetTargetType(std::string const &target_type)
 {
-	std::map<std::string, ATarget *>::iterator search = arr_target.find(type_name);
-	if (search != arr_target.end())
-		delete search->second;
-	arr_target.erase(type_name);
+	aim.erase(target_type);
+	return ;
 }
 
-ATarget	*TargetGenerator::createTarget(std::string const &type_name)
+ATarget *TargetGenerator::createTarget(std::string const &target_type)
 {
-	std::map<std::string, ATarget *>::iterator search = arr_target.find(type_name);
-	if (search != arr_target.end())
-		return arr_target[type_name];
+	std::map<std::string, ATarget *>::iterator it = aim.find(target_type);
+	if (it != aim.end())
+		return aim[target_type];
 	return NULL;
 }
