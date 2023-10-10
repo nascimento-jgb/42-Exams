@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 
 						for (int i = 0; i < nextId; i++)
 							if (clientSockets[i] != socketId)
-								send(clientSockets[i], buffer, sizeof(buffer), 0);
+								send(clientSockets[i], buffer, strlen(buffer), 0);
 
 						close(socketId);
 						FD_CLR(socketId, &mainSet);
@@ -107,8 +107,7 @@ int	main(int argc, char **argv)
 
 						for (int i = 0; i < nextId; i++)
 							if (clientSockets[i] != socketId)
-								send(clientSockets[i], buffer, sizeof(buffer), 0);
-
+								send(clientSockets[i], buffer, strlen(buffer), 0);
 					}
 				}
 			}
