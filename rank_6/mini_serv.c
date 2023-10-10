@@ -103,7 +103,7 @@ int	main(int argc, char **argv)
 					} else {
 						//null terminate and broadcast the message
 						buffer[bytesRead] = '\0';
-						sprintf(buffer, "server: client %d just left\n", socketId);
+						sprintf(buffer, "client %d: %s\n", socketId, buffer);
 
 						for (int i = 0; i < nextId; i++)
 							if (clientSockets[i] != socketId)
