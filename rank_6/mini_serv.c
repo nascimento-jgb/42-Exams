@@ -83,7 +83,7 @@ int	main(int argc, char **argv)
 					maxSocket = (newClient > maxSocket) ? newClient : maxSocket;
 
 					//Broadcast message and update client sockets array
-					sprintf(buffer, "server: client %d just arrived\n", socketId);
+					sprintf(buffer, "server: client %d just arrived\n", nextId);
 					send(newClient, buffer, strlen(buffer), 0);
 					clientSockets[nextId++] = newClient;
 
