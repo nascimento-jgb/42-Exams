@@ -48,7 +48,7 @@ void	addClient() {
 	struct sockaddr_in	clientAddress;
 	socklen_t	len;
 
-	if ((clients[i].fd = accept(serverSocket, (struct sockaddr*)&clientAddress, len)) < 0)
+	if ((clients[i].fd = accept(serverSocket, (struct sockaddr*)&clientAddress, &len)) < 0)
 		fatalError();
 
 	FD_SET(clients[i].fd, &mainSet);
@@ -130,3 +130,30 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
+
+
+//client struct declaration
+
+//global variables declaration
+
+//fatal error
+
+//init server
+
+//add user
+
+//broadcast
+
+//sendMessage
+
+//Main program
+	//check for arguments
+	//init server socket and server
+	//while loop
+		//select
+		//FD_ISSET to add a client
+		//for loop through ids
+			//continue check for read set and fd < serverSocket
+			//while readBytes using reccv to read to the buffer
+			//if readBytes == 0
+			//else if different than 0
